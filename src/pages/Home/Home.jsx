@@ -1,8 +1,11 @@
+import Banner from "../../components/Banner/Banner";
+import UserCommunity from "../../components/UserCommunity/UserCommunity";
 
 const Home = () => {
     return (
         <div>
-            Hello from Home
+            <Banner />
+            <UserCommunity />
         </div>
     );
 };
