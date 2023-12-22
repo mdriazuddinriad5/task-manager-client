@@ -1,28 +1,46 @@
-import { Link, NavLink } from "react-router-dom";
-// import { useContext } from "react";
-// import { AuthContext } from "../../provider/AuthProvider";
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const NavBar = () => {
 
-    // const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
 
-    // const handleLogOut = () => {
-    //     logOut().then().catch()
-    // }
+    const handleLogOut = () => {
+        logOut().then().catch()
+    }
 
 
     const navLinks = <>
         <li><NavLink to={'/'} className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? "text-[#008080] underline" : ""
         }>Home</NavLink></li>
-        <li><NavLink to={'/dashboard'} className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#008080] underline" : ""
-        }>Dashboard</NavLink></li>
 
-        <li><NavLink to={'/login'} className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#008080] underline" : ""
-        }>Login</NavLink></li>
+        {
+            user && <li><NavLink to={'/dashboard/task'} className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "text-[#008080] underline" : ""
+            }>Dashboard</NavLink></li>
+        }
+
+        {
+            user ? <>
+
+                <p className="mr-2 text-blue-400 font-bold ">{user.displayName}</p>
+                <img className="w-8 rounded-full mr-2" src={user.photoURL} />
+
+                <a onClick={handleLogOut} href=""><button className="btn btn-sm">Sign Out</button></a>
+
+
+
+            </> :
+                <li><NavLink to={'/login'} className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-[#008080] underline" : ""
+                }>Login</NavLink></li>
+        }
+
+
+
     </>
     return (
         <div className="navbar w-5/6 mx-auto rounded-xl">
@@ -43,42 +61,7 @@ const NavBar = () => {
                     {navLinks}
                 </ul>
             </div>
-            <div className="navbar-end hidden lg:inline-flex">
-
-                {/* {
-
-                    user ? <>
-
-                        <p className="mr-2 text-blue-400 font-bold ">{user.displayName}</p>
-                        <img className="w-8 rounded-full mr-2" src={user.photoURL} />
-
-                        <a onClick={handleLogOut} href=""><button className="btn btn-sm">Sign Out</button></a>
-                    </> :
-                        <Link to={'/login'}>
-                            <button className="btn btn-sm">Login</button>
-                        </Link>
-
-                } */}
-            </div>
-
-            <div className="lg:hidden navbar-end">
-                {/* {
-                    user ? <>
-
-                        <p className="mr-2 text-blue-400 font-bold ">{user.displayName}</p>
-                        <img className="w-8 rounded-full mr-2" src={user.photoURL} />
-
-                        <a onClick={handleLogOut} href=""><button className="btn btn-sm">Sign Out</button></a>
-
-
-
-                    </> :
-                        <Link to={'/login'}>
-                            <button className="btn btn-sm">Login</button>
-                        </Link>
-                } */}
-            </div>
-
+          
 
         </div>
     );

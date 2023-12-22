@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 
 const UserCommunity = () => {
+    const { user } = useContext(AuthContext);
     const [userCategories, setUserCategories] = useState([]);
 
 
@@ -34,11 +36,17 @@ const UserCommunity = () => {
                 <strong>How It Works:</strong> Explore our user-friendly platform by signing up or logging in. Create, organize, and manage tasks effortlessly in a visually intuitive dashboard.
             </p>
 
-            <Link to={'/register'}>
-                <button className="bg-green-500 text-white py-4 px-8 text-lg font-bold rounded focus:outline-none hover:bg-green-600 transition duration-300 mt-8">
-                    Join Us Today and Empower Your Productivity!
-                </button>
-            </Link>
+            {
+                user ? <button className="bg-green-500 text-white py-4 px-8 text-lg font-bold rounded focus:outline-none hover:bg-green-600 transition duration-300 mt-8">
+                    Thanks for using our app
+                </button> :
+                    <Link to={'/register'}>
+                        <button className="bg-green-500 text-white py-4 px-8 text-lg font-bold rounded focus:outline-none hover:bg-green-600 transition duration-300 mt-8">
+                            Join Us Today and Empower Your Productivity!
+                        </button>
+                    </Link>
+            }
+
         </section>
     );
 };
